@@ -282,6 +282,7 @@
                                 <ServerForm
                                     :server="selectedServer"
                                     :form-mode="formMode"
+                                    @close="formModalClose"
                                     @server-saved="handleServerSaved"
                                 />
                             </div>
@@ -379,6 +380,9 @@ export default {
                         console.error('Error deleting server:', error);
                     });
             }
+        },
+        formModalClose() {
+            this.showModal = false;
         },
         showFormModal(server = null) {
             this.selectedServer = server;
