@@ -41,10 +41,8 @@ class ServerController extends Controller
         }
 
         // Sorting
-        $sortBy = $request->input('sort_by', 'created_at');
+        $sortBy = $request->input('sort_by', 'id');
         $sortOrder = $request->input('sort_order', 'desc');
-
-        $query->orderBy($sortBy, $sortOrder);
 
         // Pagination
         $perPage = $request->input('per_page', 10);

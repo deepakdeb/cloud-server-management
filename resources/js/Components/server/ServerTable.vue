@@ -307,7 +307,7 @@ export default {
             search: '',
             filterProvider: '',
             filterStatus: '',
-            sortColumn: 'created_at',
+            sortColumn: 'id',
             sortDirection: 'desc',
             providers: ['aws', 'digitalocean', 'vultr', 'other'],
             showModal: false,
@@ -352,7 +352,7 @@ export default {
                 .get(pageUrl, { params })
                 .then((response) => {
                     this.servers = response.data.data;
-                    this.pagination = response.data.meta;
+                    this.pagination = response.data;
                     this.selectedServers = [];
                 })
                 .catch((error) => {

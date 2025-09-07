@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Welcome from '@/Components/Welcome.vue';
-import ServerTable from '@/Components/ServerTable.vue';
+import ServerTable from '@/Components/server/ServerTable.vue';
 </script>
 
 <template>
