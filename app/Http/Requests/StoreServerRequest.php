@@ -38,7 +38,7 @@ class StoreServerRequest extends FormRequest
             ],
             'ip_address' => [
                 'required',
-                'ip',
+                'ipv4',
                 Rule::unique('servers')->ignore($server),
             ],
             'provider' => 'required|in:aws,digitalocean,vultr,other',
