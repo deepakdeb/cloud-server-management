@@ -19,6 +19,9 @@
                 >
                     <option value="">Bulk Actions</option>
                     <option value="delete">Delete Selected</option>
+                    <option value="active">Set Status to Active</option>
+                    <option value="inactive">Set Status to Inactive</option>
+                    <option value="maintenance">Set Status to Maintenance</option>
                 </select>
                 <button
                     @click="performBulkAction"
@@ -434,17 +437,30 @@ export default {
                 action: this.bulkAction,
                 ids: this.selectedServers
             };
-
-            // Optimistic UI for bulk delete
-            if (this.bulkAction === 'delete') {
-                this.servers = this.servers.filter(server => !this.selectedServers.includes(server.id));
-                this.selectedServers = [];
+            if(this.bulkAction != 'delete'){
+                payload.status = this.bulkAction;
+                payload.action = 'update_status';
             }
 
             // Perform the API call
             axios.post('servers/bulk-actions', payload)
                 .then(response => {
                     this.showNotification(response.data.message, 'success');
+                    
+                    // Optimistic UI for bulk delete
+                    if (this.bulkAction === 'delete') {
+                        this.servers = this.servers.filter(server => !this.selectedServers.includes(server.id));
+                        this.selectedServers = [];
+                    }else{
+                        this.servers = this.servers.map(server => {
+                            if (this.selectedServers.includes(server.id)) {
+                                return { ...server, status: payload.status };
+                            }
+                            return server;
+                        });
+                        this.selectedServers = [];
+                    }
+
                     this.bulkAction = '';
                 })
                 .catch(error => {
